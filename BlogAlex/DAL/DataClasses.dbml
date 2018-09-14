@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Blog" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=ALEEX-PC;Initial Catalog=Blog;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BlogConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Categoria" Member="Categoria">
+    <Type Name="Categoria">
+      <Column Name="IDCategoria" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Etiquetas" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Categoria_Publicacion" Member="Publicacion" ThisKey="IDCategoria" OtherKey="IDCategoria" Type="Publicacion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Imagen" Member="Imagen">
+    <Type Name="Imagen">
+      <Column Name="IDImagen" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Imagen" Member="Imagen1" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="IDpublicacion" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Association Name="Publicacion_Imagen" Member="Publicacion" ThisKey="IDpublicacion" OtherKey="IDpublicacion" Type="Publicacion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Publicacion" Member="Publicacion">
+    <Type Name="Publicacion">
+      <Column Name="IDpublicacion" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Texto" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Titulo" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="IDCategoria" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="UsuarioID" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Etiquetas" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Publicacion_Imagen" Member="Imagen" ThisKey="IDpublicacion" OtherKey="IDpublicacion" Type="Imagen" />
+      <Association Name="Categoria_Publicacion" Member="Categoria" ThisKey="IDCategoria" OtherKey="IDCategoria" Type="Categoria" IsForeignKey="true" />
+      <Association Name="Usuario_Publicacion" Member="Usuario" ThisKey="UsuarioID" OtherKey="UsuarioID" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Usuario" Member="Usuario">
+    <Type Name="Usuario">
+      <Column Name="UsuarioID" Type="System.String" DbType="NVarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Contraseña" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Correo_electrónico" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Administrador" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Usuario_Publicacion" Member="Publicacion" ThisKey="UsuarioID" OtherKey="UsuarioID" Type="Publicacion" />
+    </Type>
+  </Table>
+</Database>
